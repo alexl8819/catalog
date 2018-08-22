@@ -1,0 +1,6 @@
+package-lock.json
+catalog.dev.cfg
+node_modules
+__pycache__
+*.pyc
+models/**.pyc

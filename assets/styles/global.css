@@ -1,0 +1,189 @@
+@media screen and (max-width: 420px) {
+  .title {
+    font-size: 1.6em !important;
+  }
+}
+
+@media screen and (max-width: 420px) and (orientation: portrait) {
+  .border-right {
+    border-right: none !important;
+  }
+}
+
+@media screen and (max-width: 767px) and (orientation: portrait) {
+  input,
+  select {
+    width: 100%;
+  }
+
+  .btn-default {
+    padding: 5px 5px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 70%;
+  }
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, 
+*:before, 
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  background-color: #e6e6e6;
+}
+
+h1, 
+h2, 
+h3, 
+h4,
+ul,
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input[type*="text"] {
+  padding: 10px;
+  border: 1px solid #bdbdbd;
+}
+
+fieldset {
+  border: none;
+}
+
+header {
+  order: 1;
+  background-color: #0b0b61;
+  margin-bottom: 1em;
+}
+
+header .nav {
+  padding: 10px 0;
+}
+
+header .nav .title {
+  flex: 8;
+}
+
+header .nav .btn {
+  flex: 1;
+}
+
+main {
+  flex: 0 auto;
+  order: 2; 
+  background-color: #fafafa;
+  border-radius: 3px;
+  border: 1px solid #bdbdbd;
+}
+
+.container {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 800;
+  color: #fafafa;
+}
+
+.heading {
+  margin: 10px 0;
+}
+
+.btn {
+  padding: 5px 0;
+  font-size: 1.150em;
+  text-align: center;
+  border-radius: 1px;
+}
+
+.btn-default {
+  background-color: #ff4000;
+  color: #fafafa;
+}
+
+.border-right {
+  border-right: 1px solid #bdbdbd;
+}
+
+.errors {
+  list-style-type: disc !important;
+  padding-left: 18px;
+  color: #b40404;
+}
+
+.is-flex-1 {
+  flex: 1;
+}
+
+.is-flex-1-100 {
+  flex: 1 100%;
+}
+
+.is-flex-3 {
+  flex: 3;
+}
+
+.section {
+  margin: 13px 15px;
+}
+
+.section .list {
+  list-style-type: none;
+  margin: 5px 2px;
+}
+
+.section a {
+  color: #ff4000;
+}
+
+.section ul li {
+  margin-bottom: 8px;
+}
+
+.section ul li span {
+  font-style: italic;
+  color: #6e6e6e;
+}
+
+.section label,
+.section input,
+.section select {
+  display: block;
+}
+
+.section label {
+  margin-bottom: 5px;
+}
+
+.section .error input[type*="text"] {
+  border: 1px solid #b40404;
+}
+
+.section input[type*="submit"] {
+  margin-top: 5px;
+}

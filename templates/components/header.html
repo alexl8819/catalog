@@ -1,0 +1,14 @@
+<header class="is-flex-1-100">
+  <nav class="nav">
+    <div class="container flex">
+      <h1 class="title">
+        <a href="/">Catalog App</a>
+      </h1>
+      {% if authenticated %}
+      <a class="btn btn-default" href="/logout">Logout</a>
+      {% else %}
+      <a class="btn btn-default" href="/login">Login</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>

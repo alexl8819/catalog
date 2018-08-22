@@ -1,0 +1,13 @@
+<aside class="section is-flex-1 border-right">
+  <h2 class="heading">Categories</h2>
+  {% if categories %}
+  <ul class="list">
+  {% for category in categories %}
+    <li>
+      <a href="/catalog/{{ category }}/Items">{{ category }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+</aside>
+

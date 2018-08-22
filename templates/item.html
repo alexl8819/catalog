@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Catalog - Category - {{ category }} - {{ item.title }} {% endblock title %}
+{% block content %}
+    <section class="section is-flex-1-100">
+      <h2 class="heading">{{ item.title }}</h2>
+      <p>{{ item.description|default('No item description available', True) }}</p>
+      {% if authenticated %}
+      <p>
+        <a href="/catalog/{{ item.title }}/edit">Edit</a> | <a href="/catalog/{{ item.title }}/delete">Delete</a>
+      </p>
+      {% endif %}
+    </section>
+{% endblock content %}

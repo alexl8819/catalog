@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %} Catalog - Index {% endblock title %}
+{% block content %}
+    {% include 'aside.html' %}
+    <section class="section is-flex-3">
+      {% if authenticated %}
+      <a href="/catalog/item/create">Add Item</a>
+      {% endif %}
+      <h2 class="heading">Latest Items</h2>
+      {% if items %}
+      <ul class="list">
+      {% for item in items %}
+      	<li>
+	  <a href="/catalog/{{ item.category }}/{{ item.title }}">{{ item.title }}</a>
+          <span>({{ item.category }})</span>
+	</li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+{% endblock content %}

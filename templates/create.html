@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %} Catalog - Create Item - New {% endblock title %}
+{% block content %}
+    <section class="section is-flex-1-100">
+      <h2 class="heading">Create Item</h2>
+      <form action="/catalog/item/create" method="POST">
+        <fieldset>
+	  <p class="{{ 'error' if form.errors.title }}">
+	    {{ form.title.label }}
+	    {{ form.title }}
+          </p>
+          {% if form.errors.title %}
+          <ul class="errors">
+            {% for error in form.errors.title %}
+            <li>
+              <strong>{{ error }}</strong>
+            </li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+          <p class="{{ 'error' if form.errors.description }}">
+            {{ form.description.label }}
+            {{ form.description }}
+          </p>
+          {% if form.errors.description %}
+          <ul class="errors">
+            {% for error in form.errors.description %}
+            <li>
+              <strong>{{ error }}</strong>
+            </li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+          <p>
+	    {{ form.category.label }}
+            {{ form.category }}
+          </p>
+          {{ form.csrf_token }}
+          <input type="submit" value="Submit" />
+        </fieldset>
+      </form>
+    </section>
+{% endblock content %}
