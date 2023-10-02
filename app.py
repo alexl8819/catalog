@@ -2,13 +2,12 @@
 from datetime import datetime, timedelta
 from functools import wraps
 
-from flask import Flask, session, request, jsonify
-from flask import url_for, redirect, render_template
+from flask import Flask, session, request, jsonify, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_oauthlib.client import OAuth
+from authlib.integrations.flask_client import OAuth
 
-from models.category import Base, Category, CategoryItem
-from forms import CreateForm, EditForm, DeleteForm
+from .models.category import Base, Category, CategoryItem
+from .forms import CreateForm, EditForm, DeleteForm
 
 # pylint: disable=fixme, invalid-name, unused-argument, no-member
 
@@ -18,27 +17,21 @@ from forms import CreateForm, EditForm, DeleteForm
 
 # Load configuration
 app = Flask(__name__, static_url_path='', static_folder='./public')
-app.config.from_pyfile('./catalog.cfg')
+app.config.from_pyfile('./catalog.dev.cfg')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = app.config.get('SECRET_KEY') or 'MAKE_THIS_SECRET'
 
+CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
 # Initialize extensions used
 db = SQLAlchemy(app)
 oauth = OAuth(app)
-google = oauth.remote_app(
-    'google',
-    consumer_key=app.config.get('GOOGLE_ID'),
-    consumer_secret=app.config.get('GOOGLE_SECRET'),
-    request_token_params={
-        'scope': 'email'
-    },
-    base_url='https://www.googleapis.com/oauth2/v1/',
-    request_token_url=None,
-    access_token_method='POST',
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    authorize_url='https://accounts.google.com/o/oauth2/auth'
+oauth.register(
+    name='google',
+    server_metadata_url=CONF_URL,
+    client_kwargs={
+        'scope': 'openid email'
+    }
 )
-
 
 def login_required(f):
     """ Decorator to check if page is restricted """
@@ -188,7 +181,7 @@ def edit_category_item(item):
                              for category in categories]
     form.category.default = item.category.id
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'PUT' and form.validate_on_submit():
         item.title = form.title.data
         item.description = form.description.data or None
         item.category_id = form.category.data
@@ -247,7 +240,7 @@ def display_catalog():
 
     return jsonify(dict(Categories=categories))
 
-
+# TODO: should be POST
 @app.route('/logout', methods=['GET'])
 def logout():
     """ Logout """
@@ -269,27 +262,21 @@ def login():
     if authenticated:
         return redirect(url_for('index'))
 
-    return google.authorize(
-        callback=url_for('authorized', _external=True))
+    redirect_uri = url_for('authorize', _external=True)
+    return oauth.google.authorize_redirect(redirect_uri)
 
 
 @app.route(app.config.get('GOOGLE_OAUTH_REDIRECT_URI') or '/oauth2callback')
-def authorized():
+def authorize():
     """ Authorization callback """
-    resp = google.authorized_response()
+    token = oauth.google.authorize_access_token()
 
-    if resp is None:
-        return 'Access Denied'
+    if token is None:
+        return '500: Server-side Error Occured.'
 
-    session['access_token'] = (resp['access_token'], '')
+    session['access_token'] = (token['access_token'], '')
 
     return redirect(url_for('index'))
-
-
-@google.tokengetter
-def get_google_oauth_token():
-    """ Returns oauth token """
-    return session.get('access_token')
 
 
 @app.route('/')

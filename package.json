@@ -3,14 +3,13 @@
   "private": true,
   "version": "1.0.0",
   "description": "Sample CRUD app",
-  "main": "",
   "scripts": {
     "start:dev": "export FLASK_DEBUG=true && export FLASK_APP=app.py && flask run --host=0.0.0.0",
     "start": "export FLASK_APP=app.py && gunicorn -b 0.0.0.0 app:app",
     "minify:css": "node_modules/clean-css-cli/bin/cleancss --inline=all -o public/global.min.css assets/styles/*.css",
     "test": "pylint *.py && pep8 *.py && ./node_modules/css-validator/bin/css-validator public/style.min.css"
   },
-  "author": "idealwebsolutions",
+  "author": "alexl8819",
   "license": "MIT",
   "devDependencies": {
     "clean-css-cli": "^4.1.9",
